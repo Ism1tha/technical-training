@@ -1,8 +1,18 @@
 <?xml version="1.0"?>
 <odoo>
     <record id="estate_property_action" model="ir.actions.act_window">
-        <field name="name">Propietat</field>
+        <field name="name">Propietats</field>
         <field name="res_model">estate.property</field>
         <field name="view_mode">tree,form</field>
+    </record>
+    <record id="estate_property_tag_action" model="ir.actions.act_window">
+        <field name="name">Etiquetes</field>
+        <field name="res_model">estate.property.tag</field>
+        <field name="view_mode">form</field>
+    </record>
+    <record id="estate_property_type_action" model="ir.actions.act_window">
+        <field name="name">Tipus de propietat</field>
+        <field name="res_model">estate.property.type</field>
+        <field name="view_mode">form</field>
     </record>
 </odoo>
