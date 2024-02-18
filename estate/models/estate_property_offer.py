@@ -1,4 +1,5 @@
-from odoo import models, fields
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 class EstatePropertyOffer(models.Model):
     _name = 'estate.property.offer'
@@ -17,20 +18,24 @@ class EstatePropertyOffer(models.Model):
     property_id = fields.Many2one('estate.property', string='Propietat')
 
     def write(self, vals):
-        if 'state' in vals and 'accepted' in vals['state']:
 
-            # Obtenim els registres de les ofertes que es modificarà
+        if any(offer.state == 'accepted' for offer in self):
+            raise ValidationError(_('No es poden modificar ofertes de una propietat si ja s\'ha acceptat una oferta.'))
+
+        if 'state' in vals and vals['state'] == 'accepted':
             offers_to_write = self.filtered(lambda o: 'state' in vals and vals['state'] == 'accepted')
-            
-             # Truquem al mètode write del model EstatePropertyOffer
-            res = super(EstatePropertyOffer, offers_to_write).write(vals)
-            
-            # Actualitzem el comprador i el preu de venda de la propietat corresponent
             for offer in offers_to_write:
                 offer.property_id.write({
-                    'state': 'sold', # Cambiamos el estado de la propiedad a 'offer_accepted
                     'buyer': offer.buyer_id.id,
-                    'sale_price': offer.price
+                    'sale_price': offer.price,
+                    'state': 'offer_accepted'
                 })
-        
-        return res
+            
+        if 'state' in vals and vals['state'] == 'processing':
+            offers_to_write = self.filtered(lambda o: 'state' in vals and vals['state'] == 'processing')
+            for offer in offers_to_write:
+                offer.property_id.write({
+                    'state': 'offer_received'
+                })
+            
+        return super(EstatePropertyOffer, self).write(vals)

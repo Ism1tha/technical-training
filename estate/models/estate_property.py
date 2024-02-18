@@ -1,6 +1,6 @@
 from odoo import models, fields, api
+from odoo.exceptions import UserError
 from datetime import timedelta
-from odoo.exceptions import ValidationError
 
 class EstateProperty(models.Model):
     _name = 'estate.property'
@@ -53,11 +53,29 @@ class EstateProperty(models.Model):
                     best_offer = offer.price
             property_record.best_offer = best_offer
 
-    @api.depends('surface_area', 'sale_price')
+    @api.depends('surface_area', 'expected_sale_price')
     def _compute_price_per_sqm(self):
         for property_record in self:
             if property_record.surface_area != 0:
-                property_record.price_per_sqm = property_record.sale_price / property_record.surface_area
+                property_record.price_per_sqm = property_record.expected_sale_price / property_record.surface_area
             else:
                 property_record.price_per_sqm = 0.0
+
+    @api.depends('offers.state')
+    def _compute_state(self):
+        for property_record in self:
+            if any(offer.state == 'offer_accepted' for offer in property_record.offers):
+                property_record.state = 'offer_accepted'
+            elif any(offer.state == 'offer_received' for offer in property_record.offers):
+                property_record.state = 'offer_received'
+            else:
+                property_record.state = 'new'
+                
+    def write(self, vals):
+        for property_record in self:
+            if property_record.state == 'offer_accepted':
+                raise UserError("No es pot modificar una propietat amb una oferta acceptada.")
+        return super(EstateProperty, self).write(vals)
+
+    
                 

@@ -21,22 +21,13 @@
 
     <!-- Definició de l'acció per mostrar la vista tree de estate.property -->
     <record id="estate_property_action" model="ir.actions.act_window">
-        <field name="name">Propietats</field>
+        <field name="name">Propietats immobiliàries</field>
         <field name="res_model">estate.property</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_estate_property_tree"/>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">Crea una nova propietat immobiliària</p>
         </field>
-    </record>
-
-    <!-- Assignació de l'acció com a primera vista en accedir a l'aplicació -->
-    <record id="action_estate_property" model="ir.actions.act_window">
-        <field name="name">Propietats</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">estate.property</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_estate_property_tree"/>
     </record>
 
      <!-- Vista principal per a la propietat immobiliària -->
@@ -47,6 +38,8 @@
             <form string="Propietat Immobiliària">
                 <group>
                     <group>
+                        <field name="name"/>
+                        <field name="tags" widget="many2many_tags"/>
                         <field name="postal_code"/>
                         <field name="availability_date"/>
                         <field name="expected_sale_price"/>
@@ -62,7 +55,6 @@
                     <page string="Descripció">
                         <group>
                             <field name="description" widget="html" placeholder="Introdueix una descripció detallada de la propietat"/>
-                            <field name="tags" widget="many2many_tags"/>
                             <field name="num_bedrooms"/>
                             <field name="elevator"/>
                             <field name="parking"/>
