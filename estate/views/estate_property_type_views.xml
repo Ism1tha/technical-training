@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Definició de la vista tree per a estate.property.type -->
+    <record id="view_estate_property_type_tree" model="ir.ui.view">
+        <field name="name">estate.property.type.tree</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <!-- Vista de l'arbre per als tipus de propietat -->
+            <tree string="Tipus de propietat">
+                <!-- Camp de nom del tipus de propietat -->
+                <field name="name"/>
+                <!-- Altres camps poden ser afegits aquí -->
+            </tree>
+        </field>
+    </record>
+
+    <!-- Actualització de l'acció per incloure la nova vista tree -->
+    <record id="estate_property_type_action" model="ir.actions.act_window">
+        <!-- Acció per als tipus de propietat -->
+        <field name="name">Tipus de propietat</field>
+        <!-- Model de dades per als tipus de propietat -->
+        <field name="res_model">estate.property.type</field>
+        <!-- Vista de formulari i vista de l'arbre -->
+        <field name="view_mode">tree,form</field>
+        <!-- Referència a la nova vista de l'arbre -->
+        <field name="view_id" ref="view_estate_property_type_tree"/>
+    </record>
+</odoo>

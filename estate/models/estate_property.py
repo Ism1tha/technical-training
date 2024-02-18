@@ -21,18 +21,7 @@ class EstateProperty(models.Model):
         ('cancelled', 'Cancel·lada')
     ], string='Estat', default='new')
     num_bedrooms = fields.Integer(string='Nombre d’habitacions', required=True)
-    property_type = fields.Selection([
-        ('house', 'Casa'),
-        ('apartment', 'Pis'),
-        ('penthouse', 'Àtic'),
-        ('villa', 'Vila'),
-        ('land', 'Terreny'),
-        ('commercial', 'Local comercial'),
-        ('office', 'Oficina'),
-        ('warehouse', 'Magatzem'),
-        ('building', 'Edifici'),
-        ('other', 'Altres')
-    ], string='Tipus')
+    property_type_id = fields.Many2one('estate.property.type', string='Tipus')
     tags = fields.Many2many('estate.property.tag', string='Etiquetes')
     elevator = fields.Boolean(string='Ascensor', default=False)
     parking = fields.Boolean(string='Parking', default=False)
@@ -55,11 +44,11 @@ class EstateProperty(models.Model):
     buyer = fields.Many2one('res.partner', string='Comprador')
     salesman = fields.Many2one('res.users', string='Comercial', default=lambda self: self.env.user)
 
-    @api.depends('offers.price')
+    @api.depends('offers.price', 'offers.state')
     def _compute_best_offer(self):
         for property_record in self:
             best_offer = 0.0
-            for offer in property_record.offers:
+            for offer in property_record.offers.filtered(lambda o: o.state != 'rejected'):
                 if offer.price > best_offer:
                     best_offer = offer.price
             property_record.best_offer = best_offer
@@ -71,3 +60,4 @@ class EstateProperty(models.Model):
                 property_record.price_per_sqm = property_record.sale_price / property_record.surface_area
             else:
                 property_record.price_per_sqm = 0.0
+                

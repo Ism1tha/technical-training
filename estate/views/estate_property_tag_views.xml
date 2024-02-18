@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Definició de la vista tree per a estate.property.tag -->
+    <record id="view_estate_property_tag_tree" model="ir.ui.view">
+        <field name="name">estate.property.tag.tree</field>
+        <field name="model">estate.property.tag</field>
+        <field name="arch" type="xml">
+            <!-- Vista de l'arbre per a les etiquetes de propietat -->
+            <tree string="Etiquetes">
+                <!-- Camp de nom de l'etiqueta -->
+                <field name="name"/>
+                <!-- Pots afegir altres camps aquí -->
+            </tree>
+        </field>
+    </record>
+
+    <!-- Actualitza l'acció per incloure la nova vista tree -->
+    <record id="estate_property_tag_action" model="ir.actions.act_window">
+        <!-- Acció per a les etiquetes de propietat -->
+        <field name="name">Etiquetes</field>
+        <!-- Model de dades per a les etiquetes de propietat -->
+        <field name="res_model">estate.property.tag</field>
+        <!-- Vista de formulari i vista de l'arbre -->
+        <field name="view_mode">tree,form</field>
+        <!-- Referència a la nova vista de l'arbre -->
+        <field name="view_id" ref="view_estate_property_tag_tree"/>
+    </record>
+</odoo>

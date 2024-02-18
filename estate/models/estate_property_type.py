@@ -4,5 +4,4 @@ class EstatePropertyType(models.Model):
     _name = 'estate.property.type'
     _description = 'Property Type'
 
-    name = fields.Char(string='Name', required=True)
-    description = fields.Text(string='Description')
+    name = fields.Char(string='Tipus de propietat', required=True)

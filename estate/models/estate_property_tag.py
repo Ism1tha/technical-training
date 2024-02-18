@@ -4,5 +4,4 @@ class EstatePropertyTag(models.Model):
     _name = 'estate.property.tag'
     _description = 'Property Tags'
 
-    name = fields.Char(string='Name', required=True)
-    color = fields.Integer(string='Color')
+    name = fields.Char(string='Nom de l\'etiqueta', required=True)
