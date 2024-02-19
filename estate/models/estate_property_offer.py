@@ -16,6 +16,13 @@ class EstatePropertyOffer(models.Model):
     comments = fields.Text(string='Comentaris')
     property_id = fields.Many2one('estate.property', string='Propietat')
 
+    @api.model
+    def create(self, vals):
+        offer = super(EstatePropertyOffer, self).create(vals)
+        if offer.property_id.state == 'new':
+            offer.property_id.write({'state': 'offer_received'})
+        return offer
+
     def write(self, vals):
 
         if 'state' in vals and vals['state'] == 'accepted':
@@ -27,7 +34,7 @@ class EstatePropertyOffer(models.Model):
                     'state': 'offer_accepted'
                 })
             
-        if 'state' in vals and vals['state'] == 'processing':
+        elif 'state' in vals and vals['state'] == 'processing':
             print('processing state')
             offers_to_write = self.filtered(lambda o: 'state' in vals and vals['state'] == 'processing')
             for offer in offers_to_write:
