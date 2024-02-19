@@ -19,9 +19,6 @@ class EstatePropertyOffer(models.Model):
 
     def write(self, vals):
 
-        if any(offer.state == 'accepted' for offer in self):
-            raise ValidationError(_('No es poden modificar ofertes de una propietat si ja s\'ha acceptat una oferta.'))
-
         if 'state' in vals and vals['state'] == 'accepted':
             offers_to_write = self.filtered(lambda o: 'state' in vals and vals['state'] == 'accepted')
             for offer in offers_to_write:
@@ -32,10 +29,11 @@ class EstatePropertyOffer(models.Model):
                 })
             
         if 'state' in vals and vals['state'] == 'processing':
+            print('processing state')
             offers_to_write = self.filtered(lambda o: 'state' in vals and vals['state'] == 'processing')
             for offer in offers_to_write:
                 offer.property_id.write({
                     'state': 'offer_received'
                 })
-            
+        
         return super(EstatePropertyOffer, self).write(vals)

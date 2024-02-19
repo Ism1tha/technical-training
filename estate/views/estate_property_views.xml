@@ -1,5 +1,13 @@
 <?xml version="1.0"?>
 <odoo>
+    <!-- Definició de l'acció per mostrar la vista tree de estate.property -->
+    <record id="estate_property_action" model="ir.actions.act_window">
+        <field name="name">Propietats immobiliàries</field>
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_estate_property_tree"/>
+    </record>
+
     <!-- Definició de la vista tree per a estate.property -->
     <record id="view_estate_property_tree" model="ir.ui.view">
         <field name="name">estate.property.tree</field>
@@ -19,14 +27,26 @@
         </field>
     </record>
 
-    <!-- Definició de l'acció per mostrar la vista tree de estate.property -->
-    <record id="estate_property_action" model="ir.actions.act_window">
-        <field name="name">Propietats immobiliàries</field>
-        <field name="res_model">estate.property</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_estate_property_tree"/>
-        <field name="help" type="html">
-            <p class="oe_view_nocontent_create">Crea una nova propietat immobiliària</p>
+    <!-- Definició dels filtres per a estate.property -->
+    <record id="view_estate_property_filter" model="ir.ui.view">
+        <field name="name">estate.property.filter</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <search string="Cerca de propietats">
+                <field name="name" string="Nom"/>
+                <field name="property_type_id" string="Tipus de propietat"/>
+                <field name="postal_code" string="Codi postal"/>
+                <field name="expected_sale_price" string="Preu de venda esperat"/>
+                <field name="state" string="Estat"/>
+                <field name="availability_date" string="Data de disponibilitat"/>
+                <!-- Filtres predefinits -->
+                <filter name="available" string="Disponibles" domain="[('state', 'in', ('new', 'offer_received'))]"/>
+                <filter name="low_price" string="Baix preu" domain="[('sale_price', '&lt;', 100000)]"/>
+                <!-- Agrupació per tipus -->
+                <group expand="0" string="Agrupació per tipus">
+                    <filter name="property_type_id" string="Tipus de propietat" context="{'group_by':'property_type_id'}"/>
+                </group>
+            </search>
         </field>
     </record>
 
@@ -54,16 +74,20 @@
                     <!-- Pestanya per a la descripció -->
                     <page string="Descripció">
                         <group>
-                            <field name="description" widget="html" placeholder="Introdueix una descripció detallada de la propietat"/>
-                            <field name="num_bedrooms"/>
-                            <field name="elevator"/>
-                            <field name="parking"/>
-                            <field name="renovated"/>
-                            <field name="num_bathrooms"/>
-                            <field name="surface_area"/>
-                            <field name="price_per_sqm"/>
-                            <field name="construction_year"/>
-                            <field name="energy_certificate"/>
+                            <group>
+                                <field name="description" widget="html" placeholder="Introdueix una descripció detallada de la propietat"/>
+                                <field name="num_bedrooms"/>
+                                <field name="num_bathrooms"/>
+                                <field name="surface_area"/>
+                                <field name="construction_year"/>
+                            </group>
+                            <group>
+                                <field name="elevator"/>
+                                <field name="parking"/>
+                                <field name="renovated"/>
+                                <field name="price_per_sqm"/>
+                                <field name="energy_certificate"/>
+                            </group>
                         </group>
                     </page>
                     <!-- Pestanya per a les ofertes -->
