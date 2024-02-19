@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <odoo>
     <!-- Definició del menú principal per a l'aplicació de gestió de propietats immobiliàries -->
-    <menuitem id="estate_menu_root" name="Propietats immobiliàries">
+    <menuitem id="estate_menu_root" name="Propietats immobiliaries">
         <!-- Submenú d'anuncis -->
         <menuitem id="estate_first_level_menu" name="Anuncis">
             <!-- Opció per accedir a la llista d'anuncis de propietats -->

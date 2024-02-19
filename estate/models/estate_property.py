@@ -5,7 +5,7 @@ from datetime import timedelta
 class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'Real Estate Property'
-
+    
     name = fields.Char(string='Nom', required=True)
     description = fields.Text(string='Descripció')
     postal_code = fields.Char(string='Codi postal', required=True)
@@ -76,6 +76,4 @@ class EstateProperty(models.Model):
             if property_record.state == 'offer_accepted':
                 raise UserError("No es pot modificar una propietat amb una oferta acceptada.")
         return super(EstateProperty, self).write(vals)
-
     
-                

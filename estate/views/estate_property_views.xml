@@ -1,13 +1,5 @@
 <?xml version="1.0"?>
 <odoo>
-    <!-- Definició de l'acció per mostrar la vista tree de estate.property -->
-    <record id="estate_property_action" model="ir.actions.act_window">
-        <field name="name">Propietats immobiliàries</field>
-        <field name="res_model">estate.property</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_estate_property_tree"/>
-    </record>
-
     <!-- Definició de la vista tree per a estate.property -->
     <record id="view_estate_property_tree" model="ir.ui.view">
         <field name="name">estate.property.tree</field>
@@ -25,6 +17,15 @@
                 <field name="state"/>
             </tree>
         </field>
+    </record>
+
+
+    <!-- Definició de l'acció per mostrar la vista tree de estate.property -->
+    <record id="estate_property_action" model="ir.actions.act_window">
+        <field name="name">Propietats immobiliàries</field>
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_estate_property_tree"/>
     </record>
 
     <!-- Definició dels filtres per a estate.property -->
@@ -87,6 +88,8 @@
                                 <field name="renovated"/>
                                 <field name="price_per_sqm"/>
                                 <field name="energy_certificate"/>
+                                <field name="buyer"/>
+                                <field name="salesman"/>
                             </group>
                         </group>
                     </page>
