@@ -1,5 +1,4 @@
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
 
 class EstatePropertyOffer(models.Model):
     _name = 'estate.property.offer'
