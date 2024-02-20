@@ -70,10 +70,4 @@ class EstateProperty(models.Model):
                 property_record.state = 'offer_received'
             else:
                 property_record.state = 'new'
-                
-    def write(self, vals):
-        for property_record in self:
-            if property_record.state == 'offer_accepted':
-                raise UserError("No es pot modificar una propietat amb una oferta acceptada.")
-        return super(EstateProperty, self).write(vals)
     
