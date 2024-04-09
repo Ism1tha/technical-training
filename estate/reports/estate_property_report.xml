@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Acción del Reporte -->
+        <record id="action_report_property" model="ir.actions.report">
+            <field name="name">Property Offer Report</field>
+            <field name="model">estate.property</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">estate.report_property</field>
+            <field name="report_file">estate.report_property</field>
+            <field name="print_report_name">(object.name or '').replace('/', '-') + ' - Offers'</field>
+            <field name="binding_model_id" ref="model_estate_property"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Registro de la Plantilla -->
+        <record id="estate_report_property" model="ir.actions.report">
+            <field name="name">Reporte de Ofertas de Propiedad</field>
+            <field name="model">estate.property</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">estate.report_property</field>
+            <field name="print_report_name">(object.name or '').replace('/', '-') + ' - Offers'</field>
+        </record>
+    </data>
+</odoo>

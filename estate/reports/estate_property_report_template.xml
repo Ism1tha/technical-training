@@ -1,0 +1,15 @@
+<odoo>
+    <template id="report_property">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="property">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Property Offer Report</h2>
+                        <p>Property Name: <span t-field="property.name"/></p>
+                        <!-- Add other fields here based on your report requirements -->
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

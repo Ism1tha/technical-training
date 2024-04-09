@@ -71,3 +71,7 @@ class EstateProperty(models.Model):
             else:
                 property_record.state = 'new'
     
+    @api.model
+    def generate_report_name(self):
+        # Your logic to generate the report name dynamically
+        return "Estate Property Report"

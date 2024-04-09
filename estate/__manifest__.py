@@ -13,6 +13,8 @@
         "views/estate_property_type_views.xml",
         "views/estate_property_tag_views.xml",
         'views/estate_menus.xml',
+        'reports/estate_property_report.xml',
+        'reports/estate_property_report_template.xml',
     ],
     "installable": True,
     'license': 'LGPL-3',
